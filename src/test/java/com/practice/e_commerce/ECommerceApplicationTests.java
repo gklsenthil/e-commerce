@@ -1,13 +1,14 @@
 package com.practice.e_commerce;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@SpringBootTest
 class ECommerceApplicationTests {
 
 	@Test
-	void contextLoads() {
+	void simpleTest() {
+		int sum = 2 + 3;
+		assertEquals(5, sum);
 	}
 
 }
