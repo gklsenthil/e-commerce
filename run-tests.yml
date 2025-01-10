@@ -1,0 +1,31 @@
+name: Run Integration Tests
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Backend Repository
+        uses: actions/checkout@v3
+        with:
+          repository: gklsenthil/demotask
+          token: ${{ secrets.GITHUB_TOKEN }}
+          path: backend
+
+      - name: Install Backend Dependencies
+        run: |
+          cd ../backend
+          mvn install
+
+      - name: Run Test Cases
+        run: |
+          mvn test
+
+      - name: Publish Results
+        if: success()
+        run: echo "All tests passed successfully!"
+        if: failure()
+        run: echo "Tests failed. Build cannot proceed."
