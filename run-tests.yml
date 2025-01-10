@@ -8,6 +8,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Checkout the backend repository
       - name: Checkout Backend Repository
         uses: actions/checkout@v3
         with:
@@ -15,17 +16,22 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           path: backend
 
+      # Step 2: Install dependencies
       - name: Install Backend Dependencies
-        run: |
-          cd ../backend
-          mvn install
+        working-directory: ./backend
+        run: mvn install
 
+      # Step 3: Run test cases
       - name: Run Test Cases
-        run: |
-          mvn test
+        working-directory: ./backend
+        run: mvn test
 
+      # Step 4: Publish results
       - name: Publish Results
-        if: success()
-        run: echo "All tests passed successfully!"
-        if: failure()
-        run: echo "Tests failed. Build cannot proceed."
+        if: always() # Always runs, regardless of success or failure
+        run: |
+          if [ ${{ job.status }} == 'success' ]; then
+            echo "All tests passed successfully!"
+          else
+            echo "Tests failed. Build cannot proceed."
+          fi
