@@ -8,7 +8,7 @@ class ECommerceApplicationTests {
 	@Test
 	void simpleTest() {
 		int sum = 2 + 3;
-		assertEquals(5, sum);
+		assertEquals(6, sum);
 	}
 
 }
