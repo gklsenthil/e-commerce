@@ -16,21 +16,22 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           path: backend
 
+      # Step 2: Pull Latest Changes
       - name: Pull Latest Changes
         working-directory: ./backend
         run: git pull origin main
 
-      # Step 2: Install dependencies
+      # Step 3: Install dependencies
       - name: Install Backend Dependencies
         working-directory: ./backend
         run: mvn install
 
-      # Step 3: Run test cases
+      # Step 4: Run test cases
       - name: Run Test Cases
         working-directory: ./backend
         run: mvn test
 
-      # Step 4: Publish results
+      # Step 5: Publish results
       - name: Publish Results
         if: always() # Always runs, regardless of success or failure
         run: |
@@ -38,4 +39,5 @@ jobs:
             echo "All tests passed successfully!"
           else
             echo "Tests failed. Build cannot proceed."
+            exit 1 # Explicitly mark the job as failed
           fi
